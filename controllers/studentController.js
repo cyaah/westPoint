@@ -1,7 +1,10 @@
-exports.getStudents = async(req, res, next) => {
+var studentModel = require('../model/studentModel');
+
+exports.getStudents = async (req, res, next) => {
   console.log('jeressss')
   let ping = {
     "success": 'got students'
   };
-  res.status(200).json(ping)
+  var students = await studentModel.getStudents();
+  res.status(200).json(students);
 };
