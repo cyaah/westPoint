@@ -4,12 +4,16 @@ const pingController = require('../controllers/pingController');
 const studentController = require('../controllers/studentController');
 const teachersController = require('../controllers/teachersController');
 
-/* GET home page. */
+/* GET REQUESTS */
 router.get('/', pingController.getPing);
 router.get('/class', studentController.getStudentsByClass);
 router.get('/students', studentController.getStudents);
 router.get('/teachers', teachersController.getTeachers);
+
+
+/*  POST REQUESTS */
 router.post('/teachers', teachersController.postTeachers);
+router.post('/students', studentController.postStudents);
 
 
 

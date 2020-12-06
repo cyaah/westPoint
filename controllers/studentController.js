@@ -82,3 +82,36 @@ exports.getStudentsByClass = async (req, res, next) => {
   }
 
 };
+
+
+exports.postStudents = async (req, res, next) => {
+  console.log('Posting new Students controller');
+  let error = {};
+  try {
+    let student = req.body;
+
+    //Check
+    if (req.body.first_name) {
+
+      var students = await studentModel.postStudents(student);
+      console.log(students)
+    } else {
+      error.reason = 'No name provided';
+      res.status(500).json(error)
+    }
+
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (e) {
+    console.log(e);
+    if (e.error) {
+      error.reason = e.error
+    } else {
+      error.reason = 'Service Error';
+    }
+    res.status(500).json(error);
+  }
+
+};

@@ -41,15 +41,22 @@ exports.postTeachers = (teacher) => {
       ('${teacher.first_name}','${teacher.last_name}','${teacher.start_date}','${teacher.birth_date}','${teacher.job_title}','${teacher.education}','${teacher.address}',${teacher.phone_number}, 
       '${teacher.email}', '${teacher.pan_card}',${teacher.emergency_contact})`
       let select = false;
-      console.log(query);
+
+
       sql.query(`${query}`, (err, result) => {
+
         if (err) {
-          return reject(err)
+          if (err.code) {
+            return reject({
+              error: err.sqlMessage
+            })
+          } else {
+            return reject(err)
+          }
         }
-        console.log(result);
+
         return resolve(result);
       });
-
     } catch (e) {
       console.log('Error in db query POST Teachers')
       throw e

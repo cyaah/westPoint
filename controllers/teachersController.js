@@ -49,28 +49,28 @@ exports.getTeachers = async (req, res, next) => {
 
 exports.postTeachers = async (req, res, next) => {
   console.log('Posting new teachers controller');
-  let error = {
-    reason: ''
-  }
+  let error = {};
   try {
-    console.log(req.body);
     let teacher = req.body;
 
-    //Filters
+    //Check
     if (req.body.first_name) {
-      console.log('entered') 
       var teachers = await teachersModel.postTeachers(teacher);
-      console.log(teachers)
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)
     }
 
-  
-    res.status(200).json({ success: true});
+
+    res.status(200).json({
+      success: true
+    });
   } catch (e) {
-    console.log(e);
-    error.reason = 'Service Error';
+    if (e.error) {
+      error.reason = e.error
+    } else {
+      error.reason = 'Service Error';
+    }
     res.status(500).json(error);
   }
 
