@@ -3,7 +3,7 @@ var moment = require('moment');
 
 
 
-
+/* GET Student */
 exports.getStudents = async (req, res, next) => {
   try {
     let error = {
@@ -47,7 +47,7 @@ exports.getStudents = async (req, res, next) => {
 
 };
 
-
+/* GET Student By Class */
 exports.getStudentsByClass = async (req, res, next) => {
   try {
     let Class = req.query.class;
@@ -85,7 +85,7 @@ exports.getStudentsByClass = async (req, res, next) => {
 
 };
 
-
+/* POST Student By Class */
 exports.postStudents = async (req, res, next) => {
   console.log('Posting new Students controller');
   let error = {};
@@ -117,7 +117,7 @@ exports.postStudents = async (req, res, next) => {
 
 };
 
-
+/* PUT Student By Class */
 exports.editStudentsById = async (req, res, next) => {
   console.log('EDITING Students controller');
   let error = {};

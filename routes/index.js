@@ -27,8 +27,8 @@ router.put('/students', studentController.editStudentsById);
 
 
 /*  DEL REQUESTS */
-// router.post('/teachers', teachersController.putTeachers);
-router.put('/students', studentController.editStudentsById);
+//  router.DEL('/teachers', teachersController.putTeachers);
+// router.DEL('/students', studentController.editStudentsById);
 
 
 

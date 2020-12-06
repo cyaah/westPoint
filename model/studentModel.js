@@ -1,7 +1,7 @@
 const sql = require('./db');
 
 
-//GET Student
+/* get Student */
 exports.getStudents = (student) => {
   console.log('Fetching student from DB getStudents')
   return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ exports.getStudents = (student) => {
 };
 
 
-//GET Student by class
+/* get Student by class */
 exports.getStudentsByClass = (student) => {
   console.log('Fetching student from DB getStudentsByClass')
   return new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ exports.getStudentsByClass = (student) => {
 };
 
 
-//POST Student
+/* POST Student */
 exports.postStudents = (student) => {
   console.log('Inserting Student from DB getStudents')
   return new Promise((resolve, reject) => {
@@ -101,12 +101,10 @@ exports.postStudents = (student) => {
 
 
 /* EDIT Student */
-
 exports.putStudent = (student) => {
   console.log('Editing Student from DB putStudents')
   return new Promise((resolve, reject) => {
     try {
-
       query = `UPDATE westPoint.students SET id = ${student.id}, first_name='${student.first_name}', last_name='${student.last_name}', 
       class='${student.class}', section='${student.section}', sex='${student.sex}', address='${student.address}' WHERE id=${student.id}`;
 

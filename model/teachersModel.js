@@ -1,6 +1,6 @@
 const sql = require('./db');
 
-
+/* GET Teacher */
 exports.getTeachers = (teacher) => {
   console.log('Fetching teacher from DB getTeachers')
   return new Promise((resolve, reject) => {
@@ -33,8 +33,7 @@ exports.getTeachers = (teacher) => {
 
 
 
-/* EDIT Teacher */
-
+/* CREATE Teacher */
 exports.postTeachers = (teacher) => {
   console.log('Inserting teacher from DB getTeachers')
   return new Promise((resolve, reject) => {
@@ -67,7 +66,7 @@ exports.postTeachers = (teacher) => {
 };
 
 
-
+/* EDIT Teacher */
 exports.putTeacher = (teacher) => {
   console.log('Editing Student from DB putStudents')
   return new Promise((resolve, reject) => {

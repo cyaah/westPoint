@@ -1,6 +1,9 @@
 var teachersModel = require('../model/teachersModel');
 var moment = require('moment');
 
+
+
+/* GET Teachers */
 exports.getTeachers = async (req, res, next) => {
   console.log('entering teachers controller');
   let error = {
@@ -45,8 +48,7 @@ exports.getTeachers = async (req, res, next) => {
 };
 
 
-
-
+/* POST Teacher */
 exports.postTeachers = async (req, res, next) => {
   console.log('Posting new teachers controller');
   let error = {};
@@ -77,7 +79,7 @@ exports.postTeachers = async (req, res, next) => {
 };
 
 
-
+/* EDIT Teacher */
 exports.editTeachersById = async (req, res, next) => {
   console.log('EDITING Teachers controller');
   let error = {};
