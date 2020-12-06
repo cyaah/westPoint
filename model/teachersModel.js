@@ -30,3 +30,29 @@ exports.getTeachers = (teacher) => {
     }
   });
 };
+
+
+
+exports.postTeachers = (teacher) => {
+  console.log('Inserting teacher from DB getTeachers')
+  return new Promise((resolve, reject) => {
+    try {
+      query = `INSERT INTO westPoint.teachers (first_name, last_name, start_date, birth_date, job_title, education, address, phone_number, email, pan_card, emergency_contact) VALUES 
+      ('${teacher.first_name}','${teacher.last_name}','${teacher.start_date}','${teacher.birth_date}','${teacher.job_title}','${teacher.education}','${teacher.address}',${teacher.phone_number}, 
+      '${teacher.email}', '${teacher.pan_card}',${teacher.emergency_contact})`
+      let select = false;
+      console.log(query);
+      sql.query(`${query}`, (err, result) => {
+        if (err) {
+          return reject(err)
+        }
+        console.log(result);
+        return resolve(result);
+      });
+
+    } catch (e) {
+      console.log('Error in db query POST Teachers')
+      throw e
+    }
+  });
+};

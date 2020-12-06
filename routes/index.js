@@ -9,6 +9,8 @@ router.get('/', pingController.getPing);
 router.get('/class', studentController.getStudentsByClass);
 router.get('/students', studentController.getStudents);
 router.get('/teachers', teachersController.getTeachers);
+router.post('/teachers', teachersController.postTeachers);
+
 
 
 
