@@ -15,6 +15,10 @@ router.get('/teachers', teachersController.getTeachers);
 router.post('/teachers', teachersController.postTeachers);
 router.post('/students', studentController.postStudents);
 
+/*  PUT REQUESTS */
+// router.post('/teachers', teachersController.putTeachers);
+router.put('/students', studentController.editStudentsById);
+
 
 
 

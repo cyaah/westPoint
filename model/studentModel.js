@@ -97,3 +97,33 @@ exports.postStudents = (student) => {
     }
   });
 };
+
+
+//EDIT Student
+exports.putStudents = (student) => {
+  console.log('Editing Student from DB putStudents')
+  return new Promise((resolve, reject) => {
+    try {
+
+      query = `UPDATE westPoint.students SET id = ${student.id}, first_name='${student.first_name}', last_name='${student.last_name}', 
+      class='${student.class}', section='${student.section}', sex='${student.sex}', address='${student.address}' WHERE id=${student.id}`;
+
+      sql.query(`${query}`, (err, result) => {
+
+        if (err) {
+          if (err.code) {
+            return reject({
+              error: err.sqlMessage
+            })
+          } else {
+            return reject(err)
+          }
+        }
+        return resolve(result);
+      });
+    } catch (e) {
+      console.log('Error in db query POST student')
+      throw e
+    }
+  });
+};

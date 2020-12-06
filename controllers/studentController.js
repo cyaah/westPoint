@@ -115,3 +115,33 @@ exports.postStudents = async (req, res, next) => {
   }
 
 };
+
+
+exports.editStudentsById = async (req, res, next) => {
+  console.log('EDITING Students controller');
+  let error = {};
+  try {
+    let details = req.body;
+
+    //Check
+    if (details) {
+      console.log('EINSIDE TRY');
+      var student = await studentModel.putStudents(details);
+    } else {
+      error.reason = 'No name provided';
+      res.status(500).json(error)
+    }
+    res.status(200).json({
+      success: true
+    });
+  } catch (e) {
+    console.log(e);
+    if (e.error) {
+      error.reason = e.error
+    } else {
+      error.reason = 'Service Error';
+    }
+    res.status(500).json(error);
+  }
+
+};
