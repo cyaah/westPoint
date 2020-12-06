@@ -33,6 +33,8 @@ exports.getTeachers = (teacher) => {
 
 
 
+/* EDIT Teacher */
+
 exports.postTeachers = (teacher) => {
   console.log('Inserting teacher from DB getTeachers')
   return new Promise((resolve, reject) => {
@@ -59,6 +61,36 @@ exports.postTeachers = (teacher) => {
       });
     } catch (e) {
       console.log('Error in db query POST Teachers')
+      throw e
+    }
+  });
+};
+
+
+
+exports.putTeacher = (teacher) => {
+  console.log('Editing Student from DB putStudents')
+  return new Promise((resolve, reject) => {
+    try {
+
+      query = `UPDATE westPoint.teachers SET id = ${teacher.id}, first_name='${teacher.first_name}', last_name='${teacher.last_name}', 
+      start_date='${teacher.start_date}', birth_date='${teacher.birth_date}', job_title='${teacher.job_title}', education='${teacher.education}', phone_number='${teacher.phone_number}', email='${teacher.email}' WHERE id=${teacher.id}`;
+      console.log(query);
+      sql.query(`${query}`, (err, result) => {
+
+        if (err) {
+          if (err.code) {
+            return reject({
+              error: err.sqlMessage
+            })
+          } else {
+            return reject(err)
+          }
+        }
+        return resolve(result);
+      });
+    } catch (e) {
+      console.log('Error in db query POST student')
       throw e
     }
   });

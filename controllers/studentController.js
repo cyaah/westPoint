@@ -1,6 +1,9 @@
 var studentModel = require('../model/studentModel');
 var moment = require('moment');
 
+
+
+
 exports.getStudents = async (req, res, next) => {
   try {
     let error = {
@@ -11,7 +14,8 @@ exports.getStudents = async (req, res, next) => {
 
     //Filters
     if (req.query.name) {
-      //Preparing student name for query
+
+      /* Preparing joint name. (Check optimize) */
       student.name = req.query.name.split(' ').forEach(name => {
         fullName += `%${name}%`;
       });
@@ -49,9 +53,7 @@ exports.getStudentsByClass = async (req, res, next) => {
     let Class = req.query.class;
     let section = req.query.section;
     let student = {};
-    let error = {
-      reason: ''
-    };
+    let error = {};
     if (Class) {
       student.class = Class;
     }
@@ -94,7 +96,6 @@ exports.postStudents = async (req, res, next) => {
     if (req.body.first_name) {
 
       var students = await studentModel.postStudents(student);
-      console.log(students)
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)
@@ -125,8 +126,7 @@ exports.editStudentsById = async (req, res, next) => {
 
     //Check
     if (details) {
-      console.log('EINSIDE TRY');
-      var student = await studentModel.putStudents(details);
+      var student = await studentModel.putStudent(details);
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)

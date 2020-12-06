@@ -75,3 +75,32 @@ exports.postTeachers = async (req, res, next) => {
   }
 
 };
+
+
+
+exports.editTeachersById = async (req, res, next) => {
+  console.log('EDITING Teachers controller');
+  let error = {};
+  try {
+    let details = req.body;
+
+    //Check
+    if (details) {
+      var teacher = await teachersModel.putTeacher(details);
+    } else {
+      error.reason = 'No name provided';
+      res.status(500).json(error)
+    }
+    res.status(200).json({
+      success: true
+    });
+  } catch (e) {
+    console.log(e);
+    if (e.error) {
+      error.reason = e.error
+    } else {
+      error.reason = 'Service Error';
+    }
+    res.status(500).json(error);
+  }
+};

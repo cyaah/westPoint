@@ -99,8 +99,10 @@ exports.postStudents = (student) => {
 };
 
 
-//EDIT Student
-exports.putStudents = (student) => {
+
+/* EDIT Student */
+
+exports.putStudent = (student) => {
   console.log('Editing Student from DB putStudents')
   return new Promise((resolve, reject) => {
     try {
