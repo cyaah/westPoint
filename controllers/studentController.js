@@ -56,7 +56,7 @@ exports.getStudentsByClass = async (req, res, next) => {
   }
 
   var students = await studentModel.getStudentsByClass(student);
-  
+
   //Modulerize***
   students.forEach(student => {
     //Cleaning the data 
