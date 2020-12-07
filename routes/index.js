@@ -21,14 +21,14 @@ router.post('/teachers', teachersController.postTeachers);
 router.post('/students', studentController.postStudents);
 
 /*  PUT REQUESTS */
- router.put('/teachers', teachersController.editTeachersById);
+router.put('/teachers', teachersController.editTeachersById);
 router.put('/students', studentController.editStudentsById);
 
 
 
 /*  DEL REQUESTS */
-//  router.DEL('/teachers', teachersController.putTeachers);
-// router.DEL('/students', studentController.editStudentsById);
+router.delete('/teachers', teachersController.deleteTeacherById);
+router.delete('/students', studentController.deleteStudentsById);
 
 
 

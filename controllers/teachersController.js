@@ -106,3 +106,33 @@ exports.editTeachersById = async (req, res, next) => {
     res.status(500).json(error);
   }
 };
+
+
+/* DEL Student By Teacher */
+exports.deleteTeacherById = async (req, res, next) => {
+  console.log('DELETE Students controller');
+  let error = {};
+  try {
+    let teacherId = req.query.teacherId;
+
+    //Check
+    if (teacherId) {
+      var teacher = await teachersModel.delTeacher(teacherId);
+    } else {
+      error.reason = 'No ID provided';
+      res.status(500).json(error)
+    }
+    res.status(200).json({
+      success: true
+    });
+  } catch (e) {
+    console.log(e);
+    if (e.error) {
+      error.reason = e.error
+    } else {
+      error.reason = 'Service Error';
+    }
+    res.status(500).json(error);
+  }
+
+};

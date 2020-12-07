@@ -94,3 +94,35 @@ exports.putTeacher = (teacher) => {
     }
   });
 };
+
+
+/* DEL Student */
+exports.delTeacher = (teacherId) => {
+  console.log('Deleting teacher from DB delTeacher')
+  return new Promise((resolve, reject) => {
+    try {
+
+      //Delete parent first
+
+      query = `DELETE FROM westPoint.teachers WHERE id=${teacherId}`;
+      console.log(query)
+      sql.query(`${query}`, (err, result) => {
+
+        if (err) {
+          if (err.code) {
+            return reject({
+              error: err.sqlMessage
+            })
+          } else {
+            return reject(err)
+          }
+        }
+        return resolve(result);
+      });
+
+    } catch (e) {
+      console.log('Error in db query dele student')
+      throw e
+    }
+  });
+};
