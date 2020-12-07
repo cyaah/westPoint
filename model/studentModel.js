@@ -72,7 +72,7 @@ exports.getStudentsByClass = (student) => {
 
 /* POST Student */
 exports.postStudents = (student) => {
-  console.log('Inserting Student from DB getStudents')
+  console.log('Inserting Student from DB postStudents')
   return new Promise((resolve, reject) => {
     try {
       query = `INSERT INTO westPoint.students (first_name, last_name, class, birth_date, section, sex, address) VALUES 

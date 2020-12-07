@@ -10,7 +10,6 @@ exports.getTeachers = async (req, res, next) => {
     reason: ''
   }
   try {
-
     let fullName = '';
     let teacher = {};
 
@@ -22,23 +21,25 @@ exports.getTeachers = async (req, res, next) => {
         fullName += `%${name}%`;
       });
       teacher.name = fullName;
+      var teachers = await teachersModel.getTeachers(teacher);
+
+      teachers.forEach(teacher => {
+        //Cleaning the data 
+        teacher.birth_date = moment(teacher.birth_date).format('DD/MM/YYYY');
+        teacher.start_date = moment(teacher.start_date).format('DD/MM/YYYY');
+        teacher.address = teacher.address.replace(/\n/g, '');
+      });
+
+      res.status(200).json(teachers);
+
+    } else if (typeof (req.query.name)) {
 
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)
     }
 
-    var teachers = await teachersModel.getTeachers(teacher);
 
-
-    teachers.forEach(teacher => {
-      //Cleaning the data 
-      teacher.birth_date = moment(teacher.birth_date).format('DD/MM/YYYY');
-      teacher.start_date = moment(teacher.start_date).format('DD/MM/YYYY');
-      teacher.address = teacher.address.replace(/\n/g, '');
-
-    });
-    res.status(200).json(teachers);
   } catch (e) {
     console.log(e);
     error.reason = 'Service Error';
@@ -56,17 +57,18 @@ exports.postTeachers = async (req, res, next) => {
     let teacher = req.body;
 
     //Check
-    if (req.body.first_name) {
+    if (Object.keys(req.body).length !== 0 && req.body.constructor === Object) {
       var teachers = await teachersModel.postTeachers(teacher);
+      res.status(200).json({
+        success: true
+      });
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)
     }
 
 
-    res.status(200).json({
-      success: true
-    });
+
   } catch (e) {
     if (e.error) {
       error.reason = e.error
@@ -87,15 +89,16 @@ exports.editTeachersById = async (req, res, next) => {
     let details = req.body;
 
     //Check
-    if (details) {
+    if (Object.keys(req.body).length !== 0 && req.body.constructor === Object) {
       var teacher = await teachersModel.putTeacher(details);
+      res.status(200).json({
+        success: true
+      });
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)
     }
-    res.status(200).json({
-      success: true
-    });
+
   } catch (e) {
     console.log(e);
     if (e.error) {
@@ -118,13 +121,13 @@ exports.deleteTeacherById = async (req, res, next) => {
     //Check
     if (teacherId) {
       var teacher = await teachersModel.delTeacher(teacherId);
+      res.status(200).json({
+        success: true
+      });
     } else {
       error.reason = 'No ID provided';
       res.status(500).json(error)
     }
-    res.status(200).json({
-      success: true
-    });
   } catch (e) {
     console.log(e);
     if (e.error) {

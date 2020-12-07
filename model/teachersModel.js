@@ -19,7 +19,13 @@ exports.getTeachers = (teacher) => {
       console.log(query);
       sql.query(`${query} LIMIT 10`, (err, result) => {
         if (err) {
-          return reject(err)
+          if (err.code) {
+            return reject({
+              error: err.sqlMessage
+            })
+          } else {
+            return reject(err)
+          }
         }
         return resolve(result);
       });
@@ -30,7 +36,6 @@ exports.getTeachers = (teacher) => {
     }
   });
 };
-
 
 
 /* CREATE Teacher */

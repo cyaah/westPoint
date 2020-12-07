@@ -20,29 +20,25 @@ exports.getStudents = async (req, res, next) => {
         fullName += `%${name}%`;
       });
       student.name = fullName;
+
+      var students = await studentModel.getStudents(student);
+
+
+      //Modulerize***
+      students.forEach(student => {
+        //Cleaning the data 
+        student.birth_date = moment(student.birth_date).format('DD/MM/YYYY');
+        student.address = student.address.replace(/\n/g, '');
+      });
+      res.status(200).json(students);
     } else {
       error.reason = 'No name provided';
       res.status(500).json(error)
     };
-
-    var students = await studentModel.getStudents(student);
-
-
-    //Modulerize***
-    students.forEach(student => {
-      //Cleaning the data 
-      student.birth_date = moment(student.birth_date).format('DD/MM/YYYY');
-      student.address = student.address.replace(/\n/g, '');
-
-    });
-    res.status(200).json(students);
   } catch (e) {
-    console.log(e);
-
     error.reason = 'Service Error';
     res.status(500).json(error);
     throw e;
-
   }
 
 };
@@ -50,16 +46,13 @@ exports.getStudents = async (req, res, next) => {
 /* GET Student By Class */
 exports.getStudentsByClass = async (req, res, next) => {
   try {
-    let Class = req.query.class;
+    let lass = req.query.class;
     let section = req.query.section;
     let student = {};
     let error = {};
-    if (Class) {
-      student.class = Class;
-    }
-    if (section) {
-      student.section = section;
-    }
+    student.class = Class;
+    student.section = section;
+
     if (!Class && !section) {
       error.reason = 'No section or class provided';
       res.status(500).json(error);
@@ -85,7 +78,7 @@ exports.getStudentsByClass = async (req, res, next) => {
 
 };
 
-/* POST Student By Class */
+/* POST Student */
 exports.postStudents = async (req, res, next) => {
   console.log('Posting new Students controller');
   let error = {};
@@ -93,18 +86,19 @@ exports.postStudents = async (req, res, next) => {
     let student = req.body;
 
     //Check
-    if (req.body.first_name) {
-
+    // Object.keys(req.body).length === 0 && req.body.constructor === Object
+    if (Object.keys(req.body).length !== 0 && req.body.constructor === Object) {
       var students = await studentModel.postStudents(student);
+
+      res.status(200).json({
+        success: true
+      });
     } else {
-      error.reason = 'No name provided';
+      error.reason = 'No student details provided.';
       res.status(500).json(error)
     }
 
 
-    res.status(200).json({
-      success: true
-    });
   } catch (e) {
     console.log(e);
     if (e.error) {
@@ -125,15 +119,16 @@ exports.editStudentsById = async (req, res, next) => {
     let details = req.body;
 
     //Check
-    if (details) {
+    if (Object.keys(req.body).length !== 0 && req.body.constructor === Object) {
       var student = await studentModel.putStudent(details);
+      res.status(200).json({
+        success: true
+      });
     } else {
-      error.reason = 'No name provided';
+      error.reason = 'No student details provided.';
       res.status(500).json(error)
     }
-    res.status(200).json({
-      success: true
-    });
+
   } catch (e) {
     console.log(e);
     if (e.error) {
@@ -155,15 +150,18 @@ exports.deleteStudentsById = async (req, res, next) => {
     let studentId = req.query.studentId;
 
     //Check
-    if (studentId) {
+    if (studentId && typeOf(studentId) === "number") {
       var student = await studentModel.delStudent(studentId);
-    } else {
+      res.status(200).json({
+        success: true
+      });
+    } else if (!studentId) {
       error.reason = 'No ID provided';
       res.status(500).json(error)
+    } else if (typeOf(studentId) !== "number") {
+      error.reason = 'Not a number';
+      res.status(500).json(error)
     }
-    res.status(200).json({
-      success: true
-    });
   } catch (e) {
     console.log(e);
     if (e.error) {
