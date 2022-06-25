@@ -1,11 +1,15 @@
 version: '3'
 services:
-  web:
-    build: .
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5000:8080"
+      - "8080:8080"
+    container_name: api
     volumes:
-      - .:/app   
+      - ./api/usr/src/app/api
+      - /usr/src/app/api/node_modeules   
   db:
     image: "mysql"
     command: --default-authentication-plugin=mysql_native_password
@@ -15,7 +19,17 @@ services:
     volumes:
       - db-data:/db
     ports:
-     - "3000:3306"  
-
+     - "3000:3000"
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+     - "3080:3080"
+    container_name: front-end
+    volumes:
+     - ./front-end:/usr/src/app/front-end
+     - ./usr/src/app/front-end/node_modules        
 volumes:
   db-data:
+
